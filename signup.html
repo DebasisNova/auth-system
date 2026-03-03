@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup | Auth System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <form id="signupForm" class="auth-form">
+            <h2>Create Account</h2>
+            <p class="subtitle">Join our platform today</p>
+
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your name">
+                <small class="error-msg" id="nameError"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="email@example.com">
+                <small class="error-msg" id="emailError"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Min 6 characters">
+                <small class="error-msg" id="passwordError"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Repeat password">
+                <small class="error-msg" id="confirmError"></small>
+            </div>
+
+            <button type="submit" class="btn-block">Sign Up</button>
+            <p class="switch-auth">Already have an account? <a href="login.html">Login</a></p>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
