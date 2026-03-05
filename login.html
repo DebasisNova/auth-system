@@ -1,33 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Auth System</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="auth-container">
-        <form id="loginForm" class="auth-form">
-            <h2>Welcome Back</h2>
-            <p class="subtitle">Login to your account</p>
 
-            <div class="form-group">
-                <label for="loginEmail">Email Address</label>
-                <input type="email" id="loginEmail" placeholder="email@example.com">
-                <small class="error-msg" id="loginEmailError"></small>
-            </div>
 
-            <div class="form-group">
-                <label for="loginPassword">Password</label>
-                <input type="password" id="loginPassword" placeholder="Enter your password">
-                <small class="error-msg" id="loginPasswordError"></small>
-            </div>
+var signupForm = document.getElementById("signupForm");
 
-            <button type="submit" class="btn-block">Login</button>
-            <p class="switch-auth">Don't have an account? <a href="signup.html">Sign Up</a></p>
-        </form>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+if (signupForm) {
+
+signupForm.onsubmit = function(e) {
+
+e.preventDefault();
+
+
+var name = document.getElementById("fullName").value;
+var email = document.getElementById("email").value;
+var password = document.getElementById("password").value;
+var confirm = document.getElementById("confirmPassword").value;
+
+
+if (name == "") {
+alert("Enter your name");
+return;
+}
+
+if (email == "") {
+alert("Enter email");
+return;
+}
+
+if (email.indexOf("@") == -1) {
+alert("Invalid email");
+return;
+}
+
+if (password.length < 6) {
+alert("Password must be at least 6 characters");
+return;
+}
+
+if (password != confirm) {
+alert("Passwords do not match");
+return;
+}
+
+
+var user = {
+name: name,
+email: email,
+password: password
+};
+
+localStorage.setItem("user", JSON.stringify(user));
+
+alert("Signup successful");
+
+window.location.href = "login.html";
+
+};
+
+}
+
+
+
+
+var loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+
+loginForm.onsubmit = function(e) {
+
+e.preventDefault();
+
+var email = document.getElementById("loginEmail").value;
+var password = document.getElementById("loginPassword").value;
+
+var storedUser = localStorage.getItem("user");
+
+if (storedUser == null) {
+alert("No account found. Please signup first.");
+return;
+}
+
+var user = JSON.parse(storedUser);
+
+if (email == user.email && password == user.password) {
+
+alert("Login successful! Welcome " + user.name);
+
+}
+else {
+
+alert("Wrong email or password");
+
+}
+
+};
+
+}
