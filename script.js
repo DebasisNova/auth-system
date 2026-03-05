@@ -1,55 +1,92 @@
-// Function to handle Signup
-const signupForm = document.getElementById('signupForm');
-if (signupForm) {
-    signupForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        document.querySelectorAll('.error-msg').forEach(el => el.innerText = '');
 
-        const name = document.getElementById('fullName').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
-        const confirm = document.getElementById('confirmPassword').value;
+var signupForm = document.getElementById("signupForm");
 
-        let isValid = true;
+if(signupForm){
 
-        if (name.length < 3) {
-            document.getElementById('nameError').innerText = "Minimum 3 characters required";
-            isValid = false;
-        }
-        if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-            document.getElementById('emailError').innerText = "Invalid email format";
-            isValid = false;
-        }
-        if (password.length < 6) {
-            document.getElementById('passwordError').innerText = "Minimum 6 characters required";
-            isValid = false;
-        }
-        if (password !== confirm) {
-            document.getElementById('confirmError').innerText = "Passwords do not match";
-            isValid = false;
-        }
+signupForm.onsubmit = function(e){
 
-        if (isValid) {
-            localStorage.setItem('user', JSON.stringify({ name, email, password }));
-            alert("Signup Successful!");
-            window.location.href = 'login.html';
-        }
-    });
+e.preventDefault();
+
+var name = document.getElementById("name").value.trim();
+var email = document.getElementById("email").value.trim();
+var password = document.getElementById("password").value;
+var confirm = document.getElementById("confirmPassword").value;
+
+document.getElementById("nameError").innerText="";
+document.getElementById("emailError").innerText="";
+document.getElementById("passError").innerText="";
+document.getElementById("confirmError").innerText="";
+
+if(name.length < 3){
+document.getElementById("nameError").innerText="Name must be at least 3 characters";
+return;
 }
 
-// Function to handle Login
-const loginForm = document.getElementById('loginForm');
-if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
-        const storedUser = JSON.parse(localStorage.getItem('user'));
+if(email.indexOf("@") == -1){
+document.getElementById("emailError").innerText="Invalid email";
+return;
+}
 
-        if (storedUser && storedUser.email === email && storedUser.password === password) {
-            alert("Login Successful! Welcome, " + storedUser.name);
-        } else {
-            document.getElementById('loginPasswordError').innerText = "Invalid credentials";
-        }
-    });
+if(password.length < 6){
+document.getElementById("passError").innerText="Password must be at least 6 characters";
+return;
+}
+
+if(password != confirm){
+document.getElementById("confirmError").innerText="Passwords do not match";
+return;
+}
+
+var user = {
+name:name,
+email:email,
+password:password
+};
+
+localStorage.setItem("user", JSON.stringify(user));
+
+alert("Signup successful");
+
+window.location="login.html";
+
+}
+
+}
+
+
+
+
+var loginForm = document.getElementById("loginForm");
+
+if(loginForm){
+
+loginForm.onsubmit = function(e){
+
+e.preventDefault();
+
+var email = document.getElementById("loginEmail").value;
+var password = document.getElementById("loginPassword").value;
+
+var storedUser = localStorage.getItem("user");
+
+if(storedUser == null){
+alert("No account found. Please signup first.");
+return;
+}
+
+var user = JSON.parse(storedUser);
+
+if(email == user.email && password == user.password){
+
+alert("Login successful! Welcome "+user.name);
+
+}
+else{
+
+document.getElementById("loginPassError").innerText="Invalid email or password";
+
+}
+
+}
+
 }
